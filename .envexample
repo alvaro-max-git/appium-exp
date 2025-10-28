@@ -1,0 +1,17 @@
+#Required config
+RUN_TARGET="Local"
+PLATFORM_NAME="Android"
+
+#Appium Server config
+APPIUM_IP="127.0.0.1"
+APPIUM_PORT=4723
+NODE_PATH="C:\\Users\\user\\nodejs\\node.exe"
+APPIUM_PATH="C:\\Users\\user\\nodejs\\node_modules\\appium\\build\\lib\\main.js"
+
+
+#Android
+ANDROID_UDID="your_udid"
+APPIUM_AUTOMATION_NAME="UiAutomator2"
+
+APP_PACKAGE="com.saucelabs.mydemoapp.android"
+APP_ACTIVITY="com.saucelabs.mydemoapp.android.view.activities.SplashActivity"

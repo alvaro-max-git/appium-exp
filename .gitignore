@@ -1,0 +1,14 @@
+# Java / IDE
+target/
+build/
+out/
+.idea/
+*.iml
+*.class
+
+# Appium / móvil
+*.apk
+
+#env
+.env
+.env.local

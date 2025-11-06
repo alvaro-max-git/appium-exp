@@ -42,8 +42,30 @@ public class CapabilitiesResolver {
     }
 
     public static UiAutomator2Options androidSauceOptions () {
-        //not implemented yet
-        return null;
+        UiAutomator2Options options = new UiAutomator2Options();
+        
+        // Appium capabilities for Android on Sauce Labs
+        options.setPlatformName("android");
+        options.setAutomationName(AutomationName.ANDROID_UIAUTOMATOR2);
+        
+        // Asignación dinámica de dispositivo real en Sauce Labs
+        options.setDeviceName(".*"); // Cualquier dispositivo Android real disponible
+        options.setPlatformVersion(".*"); // Última versión.
+        
+        // La app debe estar subida a Sauce Storage. 
+        // Aquí asumimos que se llama 'sauce-demo-app.apk'
+        options.setApp("storage:filename=mda-2.2.0-25.apk");
+
+        // Sauce Labs specific options
+        options.setCapability("sauce:options", new java.util.HashMap<String, Object>() {{
+            put("username", Env.getRequired("SAUCE_USERNAME"));
+            put("accessKey", Env.getRequired("SAUCE_ACCESS_KEY"));
+            put("build", "appium-exp-build-" + System.currentTimeMillis());
+            put("name", "LocalSauceLabsDemoAppTest on Sauce");
+            put("appiumVersion", "latest");
+        }});
+
+        return options;
     }
 
 }

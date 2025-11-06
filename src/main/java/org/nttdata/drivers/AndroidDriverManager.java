@@ -25,21 +25,26 @@ public class AndroidDriverManager {
 
         
         try {
-
             AndroidDriver driver;
+            URL url;
 
-            if(CapabilitiesResolver.isLocal()) {
+            if (CapabilitiesResolver.isLocal()) {
                 AppiumServerManager.startServer();
-                String url = Env.get("APPIUM_URL", AppiumServerManager.getServiceUrl());
-                if (url == null) throw new IllegalStateException("Appium server URL not available.");
-                driver = new AndroidDriver(new URL(url), options);
+                String localUrl = Env.get("APPIUM_URL", AppiumServerManager.getServiceUrl());
+                if (localUrl == null) throw new IllegalStateException("Appium server URL not available.");
+                url = new URL(localUrl);
+            } else if (CapabilitiesResolver.isSauceLabs()) {
+                String sauceUrl = Env.getRequired("SAUCELABS_TEST_URL");
+                url = new URL(sauceUrl);
             } else {
-                throw new IllegalStateException("Mode not supported.");
+                throw new IllegalStateException("RUN_TARGET not supported. Use 'Local' or 'Saucelabs'.");
             }
-
+            
+            driver = new AndroidDriver(url, options);
             DRIVER.set(driver);
+
         } catch (MalformedURLException e) {
-            throw new RuntimeException("Invalid Appium endpoint URL", e);
+            throw new RuntimeException("Invalid endpoint URL", e);
         }
 
     }
